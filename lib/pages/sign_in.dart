@@ -13,6 +13,7 @@ class _SignInPageState extends State<SignInPage> {
   final _formKey = GlobalKey<FormState>();
   late String _email;
   late String _senha;
+  bool _verSenha = true;
 
   @override
   Widget build(BuildContext context) {
@@ -43,11 +44,19 @@ class _SignInPageState extends State<SignInPage> {
               ),
               const SizedBox(height: 20),
               TextFormField(
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.lock),
+                decoration: InputDecoration(
+                  prefixIcon: const Icon(Icons.lock),
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        _verSenha = !_verSenha;
+                      });
+                    },
+                    icon: const Icon(Icons.remove_red_eye),
+                  ),
                   labelText: 'Senha',
                 ),
-                obscureText: true,
+                obscureText: _verSenha,
                 validator: (value) {
                   if (value == null || value.isEmpty || value.length < 8) {
                     return "Insira uma senha valida com pelo menos 8 caracters";
