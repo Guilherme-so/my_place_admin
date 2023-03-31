@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../widgets/logo.dart';
+import 'sign_up.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -43,7 +44,7 @@ class _SignInPageState extends State<SignInPage> {
               const SizedBox(height: 20),
               TextFormField(
                 decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.password),
+                  prefixIcon: Icon(Icons.lock),
                   labelText: 'Senha',
                 ),
                 obscureText: true,
@@ -75,7 +76,11 @@ class _SignInPageState extends State<SignInPage> {
               SizedBox(
                 width: 120,
                 child: OutlinedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (_) => const SignUpPage(),
+                    ));
+                  },
                   child: const Text("Cadastrar"),
                 ),
               ),
