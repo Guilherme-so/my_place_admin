@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:oktoast/oktoast.dart';
 import 'core/theme.dart';
 import 'firebase_options.dart';
 import 'pages/sign_in.dart';
@@ -16,11 +17,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'My place admin',
-      debugShowCheckedModeBanner: false,
-      theme: lightTheme,
-      home: const SignInPage(),
+    return OKToast(
+      child: MaterialApp(
+        title: 'My place admin',
+        debugShowCheckedModeBanner: false,
+        theme: lightTheme,
+        home: const SignInPage(),
+      ),
     );
   }
 }

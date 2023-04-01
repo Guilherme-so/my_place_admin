@@ -5,6 +5,7 @@ import '../../core/Exceptions/email_invalid_exception.dart';
 import '../../core/Exceptions/weak_password_exception.dart';
 import '../../widgets/loading.dart';
 import '../../widgets/logo.dart';
+import '../../widgets/toasts/toasts.utils.dart';
 import 'sign_up_controller.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -55,9 +56,9 @@ class _SignUpPageState extends State<SignUpPage> {
                           labelText: 'Email',
                         ),
                         validator: (value) {
-                          if (value == null || value.isEmpty
-                              // ||!value.contains('@')
-                              ) {
+                          if (value == null ||
+                              value.isEmpty ||
+                              !value.contains('@')) {
                             return 'Preencha um email valido!';
                           } else {
                             return null;
@@ -81,9 +82,9 @@ class _SignUpPageState extends State<SignUpPage> {
                         ),
                         obscureText: _controller.verSenha,
                         validator: (value) {
-                          if (value == null || value.isEmpty
-                              // || value.length < 8
-                              ) {
+                          if (value == null ||
+                              value.isEmpty ||
+                              value.length < 8) {
                             return "Insira uma senha valida com pelo menos 8 caracters";
                           } else {
                             return null;
@@ -111,8 +112,6 @@ class _SignUpPageState extends State<SignUpPage> {
                             _controller.setComfirmarSenha(confirmaSenha!),
                       ),
                       const SizedBox(height: 20),
-                      if (_controller.error.isNotEmpty) Text(_controller.error),
-                      const SizedBox(height: 20),
                       SizedBox(
                         width: 120,
                         child: OutlinedButton(
@@ -125,15 +124,17 @@ class _SignUpPageState extends State<SignUpPage> {
                               });
                               try {
                                 await _controller.criarUsuario();
+                                showSuccessToast("Conta criada com sucesso.");
+                                Navigator.of(context).pop();
                               } on EmailInvalid {
-                                print('Email invalido');
+                                showWarningToast("Email invalido");
                               } on WeakPasswordException {
-                                print(
+                                showWarningToast(
                                     "Senha fraca, a senha deve ter pelo menos 8 caracteres");
                               } on EmailAlreadyExists {
-                                print('Email ja existe');
+                                showWarningToast('Email ja existe');
                               } on Exception {
-                                print('Ocorreu um erro inesperado');
+                                showErrorToast('Ocorreu um erro inesperado');
                               } finally {
                                 setState(() {
                                   _controller.setIsLoading(false);

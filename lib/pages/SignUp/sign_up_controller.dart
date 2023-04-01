@@ -8,6 +8,9 @@ import '../../core/Exceptions/email_invalid_exception.dart';
 import '../../core/Exceptions/weak_password_exception.dart';
 
 class SignUpController {
+  final _firebaseAuth = FirebaseAuth.instance;
+  final _userRef = FirebaseFirestore.instance.collection('usuarios');
+
   String _nome = '';
   String _email = '';
   String _senha = '';
@@ -15,11 +18,7 @@ class SignUpController {
 
   bool _verSenha = true;
   bool _verComfirmaSenha = true;
-  String _error = '';
   bool _isLoading = false;
-
-  final _firebaseAuth = FirebaseAuth.instance;
-  final _userRef = FirebaseFirestore.instance.collection('usuarios');
 
   validadeSenha(String confirmSenha) {
     if (confirmSenha.isEmpty) {
@@ -63,13 +62,11 @@ class SignUpController {
   void setComfirmarSenha(String comfirmarSenha) =>
       _confirmaSenha = comfirmarSenha;
   void setIsLoading(bool loading) => _isLoading = loading;
-  void setError(String error) => _error = error;
 
   void setToogleVersenha() => _verSenha = !_verSenha;
   void setToogleComfirmarSenha() => _verComfirmaSenha = !_verComfirmaSenha;
 
   bool get isLoading => _isLoading;
-  String get error => _error;
   bool get verSenha => _verSenha;
   bool get verComfirmaSenha => _verComfirmaSenha;
 }
