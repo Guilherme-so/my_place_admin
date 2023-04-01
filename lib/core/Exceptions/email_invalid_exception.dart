@@ -1,0 +1,1 @@
+class EmailInvalid implements Exception {}

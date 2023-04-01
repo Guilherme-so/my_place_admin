@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
+import '../../core/Exceptions/email_already_exists_exception.dart';
+import '../../core/Exceptions/email_invalid_exception.dart';
+import '../../core/Exceptions/weak_password_exception.dart';
 import '../../widgets/loading.dart';
 import '../../widgets/logo.dart';
 import 'sign_up_controller.dart';
@@ -53,9 +55,9 @@ class _SignUpPageState extends State<SignUpPage> {
                           labelText: 'Email',
                         ),
                         validator: (value) {
-                          if (value == null ||
-                              value.isEmpty ||
-                              !value.contains('@')) {
+                          if (value == null || value.isEmpty
+                              // ||!value.contains('@')
+                              ) {
                             return 'Preencha um email valido!';
                           } else {
                             return null;
@@ -79,9 +81,9 @@ class _SignUpPageState extends State<SignUpPage> {
                         ),
                         obscureText: _controller.verSenha,
                         validator: (value) {
-                          if (value == null ||
-                              value.isEmpty ||
-                              value.length < 8) {
+                          if (value == null || value.isEmpty
+                              // || value.length < 8
+                              ) {
                             return "Insira uma senha valida com pelo menos 8 caracters";
                           } else {
                             return null;
@@ -118,28 +120,24 @@ class _SignUpPageState extends State<SignUpPage> {
                             final form = _formKey.currentState!;
                             if (form.validate()) {
                               form.save();
+                              setState(() {
+                                _controller.setIsLoading(true);
+                              });
                               try {
-                                setState(() {
-                                  _controller.setIsLoading(true);
-                                });
                                 await _controller.criarUsuario();
+                              } on EmailInvalid {
+                                print('Email invalido');
+                              } on WeakPasswordException {
+                                print(
+                                    "Senha fraca, a senha deve ter pelo menos 8 caracteres");
+                              } on EmailAlreadyExists {
+                                print('Email ja existe');
+                              } on Exception {
+                                print('Ocorreu um erro inesperado');
+                              } finally {
                                 setState(() {
                                   _controller.setIsLoading(false);
                                 });
-                              } on FirebaseAuthException catch (e) {
-                                if (e.code == 'weak-password') {
-                                  setState(() {
-                                    _controller.setError(
-                                        'The password provided is too weak.');
-                                    _controller.setIsLoading(false);
-                                  });
-                                } else if (e.code == 'email-already-in-use') {
-                                  setState(() {
-                                    _controller.setError(
-                                        'The account already exists for that email.');
-                                    _controller.setIsLoading(false);
-                                  });
-                                }
                               }
                             }
                           },
