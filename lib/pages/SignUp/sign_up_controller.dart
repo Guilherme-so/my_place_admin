@@ -3,9 +3,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../../core/Exceptions/email_already_exists_exception.dart';
-import '../../core/Exceptions/email_invalid_exception.dart';
-import '../../core/Exceptions/weak_password_exception.dart';
+import '../../core/Exceptions/SingUpExceptions/email_already_exists_exception.dart';
+import '../../core/Exceptions/SingUpExceptions/email_invalid_exception.dart';
+import '../../core/Exceptions/SingUpExceptions/weak_password_exception.dart';
 
 class SignUpController {
   final _firebaseAuth = FirebaseAuth.instance;
@@ -14,6 +14,7 @@ class SignUpController {
   String _nome = '';
   String _email = '';
   String _senha = '';
+  // ignore: unused_field
   String _confirmaSenha = '';
 
   bool _verSenha = true;

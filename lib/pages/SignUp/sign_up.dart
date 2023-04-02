@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../core/Exceptions/email_already_exists_exception.dart';
-import '../../core/Exceptions/email_invalid_exception.dart';
-import '../../core/Exceptions/weak_password_exception.dart';
+import '../../core/Exceptions/SingUpExceptions/email_already_exists_exception.dart';
+import '../../core/Exceptions/SingUpExceptions/email_invalid_exception.dart';
+import '../../core/Exceptions/SingUpExceptions/weak_password_exception.dart';
 import '../../widgets/loading.dart';
 import '../../widgets/logo.dart';
 import '../../widgets/toasts/toasts.utils.dart';
@@ -125,7 +125,9 @@ class _SignUpPageState extends State<SignUpPage> {
                               try {
                                 await _controller.criarUsuario();
                                 showSuccessToast("Conta criada com sucesso.");
-                                Navigator.of(context).pop();
+                                if (context.mounted) {
+                                  Navigator.of(context).pop();
+                                }
                               } on EmailInvalid {
                                 showWarningToast("Email invalido");
                               } on WeakPasswordException {
