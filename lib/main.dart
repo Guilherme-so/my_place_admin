@@ -3,7 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:oktoast/oktoast.dart';
 import 'core/theme.dart';
 import 'firebase_options.dart';
-import 'pages/sign_in.dart';
+import 'pages/SignIn/sign_in.dart';
 
 void main() async {
   await Firebase.initializeApp(
