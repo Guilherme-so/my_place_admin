@@ -94,11 +94,11 @@ class _SignInPageState extends State<SignInPage> {
                               _signInController.setIsLoading(true);
                             });
                             try {
-                              await _signInController.fazLogin();
+                              final user = await _signInController.fazLogin();
                               showSuccessToast('Logado com sucesso.');
                               if (context.mounted) {
                                 Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (_) => const HomePage()));
+                                    builder: (_) => HomePage(user: user!)));
                               }
                             } on NotAdmin {
                               showWarningToast('Voce nao tem permisao de adm.');
