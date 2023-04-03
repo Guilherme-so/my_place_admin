@@ -3,6 +3,7 @@ import 'package:my_place_admin/core/Models/usuario_model.dart';
 import 'package:my_place_admin/widgets/logo.dart';
 
 import '../../widgets/my_app_bar.dart';
+import '../Categoria/lista_categoria_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({required this.user, super.key});
@@ -27,6 +28,7 @@ class _HomePageState extends State<HomePage> {
             _Button(
               textProps: 'Categorias',
               iconProps: Icons.category,
+              pageProps: ListaCategoria(),
             ),
             _Button(
               textProps: 'Produtos',
