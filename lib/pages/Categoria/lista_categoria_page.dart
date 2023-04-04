@@ -4,6 +4,8 @@ import 'package:my_place_admin/widgets/loading.dart';
 import 'package:my_place_admin/widgets/my_app_bar.dart';
 import 'package:my_place_admin/widgets/my_button_icon.dart';
 
+import '../../widgets/custom_list_tile.dart';
+import '../../widgets/custom_list_view.dart';
 import '../../widgets/empty_state.dart';
 import 'lista_controller.dart';
 
@@ -39,7 +41,25 @@ class ListaCategoria extends StatelessWidget {
             if (categorias.isEmpty) {
               return const EmptyState();
             } else {
-              return const Text("data");
+              return MyCustomListView(
+                itemCount: categorias.length,
+                itemBuilder: (context, index) => MyCustomListTile(
+                  leading: categorias[index].urlImage != null
+                      ? CircleAvatar(
+                          backgroundImage:
+                              NetworkImage(categorias[index].urlImage!),
+                        )
+                      : const Icon(Icons.category),
+                  title: Text(categorias[index].nome!),
+                  trailing: IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.delete,
+                    ),
+                  ),
+                  onTap: () {},
+                ),
+              );
             }
           } else if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
