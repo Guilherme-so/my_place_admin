@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:image_network/image_network.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:my_place_admin/pages/Categoria/FormCategoria/form_controller.dart';
 import 'package:my_place_admin/widgets/my_button_icon.dart';
 
@@ -11,7 +13,7 @@ class FormCategoriaPage extends StatefulWidget {
 
 class _FormCategoriaPageState extends State<FormCategoriaPage> {
   final _formKey = GlobalKey<FormState>();
-  FormCategoriaController _controller = FormCategoriaController();
+  final FormCategoriaController _controller = FormCategoriaController();
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +21,7 @@ class _FormCategoriaPageState extends State<FormCategoriaPage> {
       body: SafeArea(
         child: NestedScrollView(
           headerSliverBuilder: (_, __) {
+            final width = MediaQuery.of(context).size.width - 32;
             return [
               SliverAppBar(
                 expandedHeight: 240,
@@ -59,13 +62,21 @@ class _FormCategoriaPageState extends State<FormCategoriaPage> {
                         child: Container(
                           width: double.infinity,
                           color: Theme.of(context).colorScheme.surface,
-                          child: Center(
-                            child: Icon(
-                              Icons.image_outlined,
-                              size: 100,
-                              color: Theme.of(context).primaryColorLight,
-                            ),
-                          ),
+                          child: _controller.categoria.urlImage == null
+                              ? Center(
+                                  child: Icon(
+                                    Icons.image_outlined,
+                                    size: 100,
+                                    color: Theme.of(context).primaryColorLight,
+                                  ),
+                                )
+                              : ImageNetwork(
+                                  image: _controller.categoria.urlImage!,
+                                  fitAndroidIos: BoxFit.cover,
+                                  fitWeb: BoxFitWeb.cover,
+                                  height: 200,
+                                  width: width,
+                                ),
                         ),
                       ),
                       Positioned(
@@ -110,6 +121,16 @@ class _FormCategoriaPageState extends State<FormCategoriaPage> {
                                 ),
                               ),
                             ],
+                            onSelected: (value) async {
+                              final imgUrl = await _controller
+                                  .escolheESalvaImagem(value == "Camera"
+                                      ? ImageSource.camera
+                                      : ImageSource.gallery);
+
+                              setState(() {
+                                _controller.setCategoriaUrlImage(imgUrl!);
+                              });
+                            },
                           ),
                         ),
                       ),
