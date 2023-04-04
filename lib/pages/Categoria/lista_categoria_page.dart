@@ -7,6 +7,7 @@ import 'package:my_place_admin/widgets/my_button_icon.dart';
 import '../../widgets/custom_list_tile.dart';
 import '../../widgets/custom_list_view.dart';
 import '../../widgets/empty_state.dart';
+import 'FormCategoria/form_categoria_page.dart';
 import 'lista_controller.dart';
 
 class ListaCategoria extends StatelessWidget {
@@ -27,7 +28,11 @@ class ListaCategoria extends StatelessWidget {
         actions: [
           MyButtonIcon(
             iconData: Icons.add,
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (_) => const FormCategoriaPage()),
+              );
+            },
           )
         ],
       ),
