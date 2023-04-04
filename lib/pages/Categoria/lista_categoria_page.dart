@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:image_network/image_network.dart';
 import 'package:my_place_admin/widgets/loading.dart';
 import 'package:my_place_admin/widgets/my_app_bar.dart';
 import 'package:my_place_admin/widgets/my_button_icon.dart';
@@ -15,7 +16,7 @@ class ListaCategoria extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _controller = ListaController();
+    final controller = ListaController();
 
     return Scaffold(
       appBar: MyAppBar(
@@ -37,11 +38,11 @@ class ListaCategoria extends StatelessWidget {
         ],
       ),
       body: StreamBuilder<QuerySnapshot>(
-        stream: _controller.categoriaStream(),
+        stream: controller.categoriaStream(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             final categorias =
-                _controller.getCategoriasFromDocs(snapshot.data!.docs);
+                controller.getCategoriasFromDocs(snapshot.data!.docs);
 
             if (categorias.isEmpty) {
               return const EmptyState();
@@ -53,6 +54,14 @@ class ListaCategoria extends StatelessWidget {
                       ? CircleAvatar(
                           backgroundImage:
                               NetworkImage(categorias[index].urlImage!),
+
+                          //     ImageNetwork(
+                          //   image: categorias[index].urlImage!,
+                          //   fitAndroidIos: BoxFit.cover,
+                          //   fitWeb: BoxFitWeb.cover,
+                          //   height: 50,
+                          //   width: 50,
+                          // ),
                         )
                       : const Icon(Icons.category),
                   title: Text(categorias[index].nome!),
