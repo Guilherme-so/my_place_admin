@@ -19,10 +19,10 @@ class CategoriaModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['nome'] = this.nome;
-    data['descricao'] = this.descricao;
-    data['urlImage'] = this.urlImage;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['nome'] = nome;
+    data['descricao'] = descricao;
+    data['urlImage'] = urlImage;
     return data;
   }
 }
