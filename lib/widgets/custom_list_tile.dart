@@ -20,7 +20,7 @@ class MyCustomListTile extends StatelessWidget {
               width: 36,
               child: leading,
             ),
-      trailing: trailing,
+      trailing: trailing!,
       title: title,
       onTap: onTap,
     );
